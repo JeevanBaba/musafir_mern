@@ -1,13 +1,16 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const dotenv = require("dotenv");
+
+dotenv.config({path: './.env'});
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 console.log("Hello World");
 // Connect to MongoDB
-mongoose.connect('mongodb+srv://travel_user:yourSecurePassword123@travelplannerdb.ad9pf.mongodb.net/?retryWrites=true&w=majority&appName=TravelPlannerDB', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connected to MongoDB'))
   .catch((error) => console.log('Error connecting to MongoDB:', error));
 
@@ -69,5 +72,5 @@ app.get("/api/trips1/:id", async (req, res) => {
 });
 
 app.listen(5000, () => {
-  console.log("Server running on port 5000");
+  console.log("Server running on port 5000");
 });
